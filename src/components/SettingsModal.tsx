@@ -49,7 +49,7 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
           <div className="mb-4">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <p className="text-sm font-bold text-white">Claude API Key</p>
+                <p className="text-sm font-bold text-white">Google Gemini API Key</p>
                 <p className="text-xs text-white/40">Powers "Explain Simply" and AI lessons</p>
               </div>
               <div className={`text-xs font-semibold rounded-full px-2.5 py-1 ${hasKey ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>
@@ -57,44 +57,48 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
               </div>
             </div>
 
+            {/* Free badge */}
+            <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2.5 mb-3">
+              <span className="text-lg">🎉</span>
+              <p className="text-xs text-emerald-300 leading-relaxed">
+                <strong>100% Free</strong> — Google Gemini's free tier has no credit card required. Just a Google account.
+              </p>
+            </div>
+
             {/* How to get key guide */}
             <button
               onClick={() => setShowGuide(g => !g)}
-              className="w-full flex items-center justify-between bg-violet-500/10 border border-violet-500/20 rounded-xl px-4 py-3 mb-3 text-left"
+              className="w-full flex items-center justify-between bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-3 mb-3 text-left"
             >
-              <span className="text-sm text-violet-300 font-medium">📖 How to get your free API key</span>
-              <span className="text-violet-400 text-sm">{showGuide ? '▲' : '▼'}</span>
+              <span className="text-sm text-blue-300 font-medium">📖 Get your free key (1 minute)</span>
+              <span className="text-blue-400 text-sm">{showGuide ? '▲' : '▼'}</span>
             </button>
 
             {showGuide && (
               <div className="bg-white/3 border border-white/8 rounded-xl p-4 mb-3 flex flex-col gap-3">
-                <p className="text-xs text-white/60 leading-relaxed">
-                  New accounts get <strong className="text-white">$5 in free credits</strong> — enough for hundreds of AI explanations.
-                  Takes about 2 minutes to set up.
-                </p>
                 {[
-                  { n: '1', text: 'Go to', link: 'console.anthropic.com', href: 'https://console.anthropic.com' },
-                  { n: '2', text: 'Click "Sign up" and create a free account', link: '', href: '' },
-                  { n: '3', text: 'After logging in, go to', link: 'API Keys section', href: 'https://console.anthropic.com/settings/keys' },
-                  { n: '4', text: 'Click "Create Key", copy it, paste it below', link: '', href: '' },
+                  { n: '1', text: 'Open', link: 'aistudio.google.com', href: 'https://aistudio.google.com/app/apikey' },
+                  { n: '2', text: 'Sign in with your Google account', link: '', href: '' },
+                  { n: '3', text: 'Click the blue "Create API key" button', link: '', href: '' },
+                  { n: '4', text: 'Copy the key and paste it in the box below', link: '', href: '' },
                 ].map(step => (
                   <div key={step.n} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-violet-500/30 text-violet-300 text-xs font-bold flex items-center justify-center flex-shrink-0">
+                    <div className="w-6 h-6 rounded-full bg-blue-500/30 text-blue-300 text-xs font-bold flex items-center justify-center flex-shrink-0">
                       {step.n}
                     </div>
                     <p className="text-xs text-white/60 leading-relaxed pt-0.5">
                       {step.text}{' '}
                       {step.href && (
-                        <a href={step.href} target="_blank" rel="noopener noreferrer" className="text-violet-400 underline">
-                          {step.link || step.href}
+                        <a href={step.href} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline font-medium">
+                          {step.link}
                         </a>
                       )}
                     </p>
                   </div>
                 ))}
-                <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2">
-                  <p className="text-xs text-amber-300/80">
-                    🔒 Your key is stored only on <em>your device</em> in local storage. It is never sent anywhere except directly to Anthropic's servers when you use AI features.
+                <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-2">
+                  <p className="text-xs text-white/50">
+                    🔒 Your key is stored only on <em>your device</em>. It's never sent anywhere except directly to Google's servers when you use AI features.
                   </p>
                 </div>
               </div>
@@ -104,14 +108,14 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
               type="password"
               value={key}
               onChange={e => setKey(e.target.value)}
-              placeholder="Paste your key here: sk-ant-api03-..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500 font-mono mb-3"
+              placeholder="Paste your key here: AIza..."
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 font-mono mb-3"
             />
 
             <button
               onClick={handleSave}
               disabled={!key.trim()}
-              className="w-full py-3.5 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-full py-3.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {saved ? '✓ Saved! AI features are now active.' : 'Save API Key'}
             </button>

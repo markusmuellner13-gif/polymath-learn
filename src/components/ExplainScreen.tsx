@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react'
 import type { ExplainMessage, UserData } from '../types'
-import { explainSimply } from '../lib/anthropic'
+import { explainSimply } from '../lib/ai'
 
 interface Props {
   userData: UserData
