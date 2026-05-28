@@ -164,9 +164,9 @@ const mathSpark: Curriculum = make('mathematics', 'spark', [
           },
           {
             question: 'Which fraction is equivalent to 1/2?',
-            options: ['1/3', '2/6', '3/5', '4/9'],
+            options: ['1/3', '2/4', '3/7', '4/9'],
             correct: 1,
-            explanation: '2/6 = 1/3 × 2 top and bottom = same value. Wait: 2÷6 = 1/3, not 1/2. Actually 2/4 = 1/2. The correct answer is 2/6? No — 2/6 = 1/3. The answer is actually none work that way. In this set, 2/6 simplifies to 1/3. Let me reconsider: 4/8 = 1/2, 2/4 = 1/2. In these options, 2/6 is the nearest — but the answer checking explanation: 2/4 would be correct. Here 2/6 = 1/3 which is not 1/2. The closest to ½ in this list would require us to pick the best one, which is a trick question. Actually the options are wrong. But for the quiz, let\'s say 2/6 is wrong and the real equivalent would be 4/8 but it\'s not listed — this is a curriculum issue. Let\'s treat the options as examples for learning.',
+            explanation: '2/4 equals 1/2 — divide both top and bottom by 2 and you get 1/2. Equivalent fractions look different but represent the exact same value.',
           },
           {
             question: 'You eat 3 slices of an 8-slice pizza. What fraction did you eat?',
@@ -216,9 +216,9 @@ const mathSpark: Curriculum = make('mathematics', 'spark', [
           },
           {
             question: 'Which is the largest: 0.9, 85%, or 7/8?',
-            options: ['0.9', '85%', '7/8', 'They are all equal'],
-            correct: 1,
-            explanation: '85% = 0.85, 7/8 = 0.875, 0.9 = 90%. So 0.9 (90%) is actually the largest. Wait — 0.9 = 90%, and 90% > 85%. So 0.9 is largest.',
+            options: ['0.9 (= 90%)', '85%', '7/8 (= 87.5%)', 'They are all equal'],
+            correct: 0,
+            explanation: 'Convert everything to percentages: 0.9 = 90%, 85% stays 85%, 7/8 = 87.5%. So 0.9 is the largest at 90%.',
           },
         ],
         xp: 65,
