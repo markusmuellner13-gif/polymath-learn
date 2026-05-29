@@ -49,7 +49,7 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
           <div className="mb-4">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <p className="text-sm font-bold text-white">Google Gemini API Key</p>
+                <p className="text-sm font-bold text-white">Groq API Key</p>
                 <p className="text-xs text-white/40">Powers "Explain Simply" and AI lessons</p>
               </div>
               <div className={`text-xs font-semibold rounded-full px-2.5 py-1 ${hasKey ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>
@@ -61,35 +61,35 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
             <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2.5 mb-3">
               <span className="text-lg">🎉</span>
               <p className="text-xs text-emerald-300 leading-relaxed">
-                <strong>100% Free</strong> — Google Gemini's free tier has no credit card required. Just a Google account.
+                <strong>100% Free, no credit card ever</strong> — Groq runs Llama 4 at lightning speed on a generous free tier.
               </p>
             </div>
 
             {/* How to get key guide */}
             <button
               onClick={() => setShowGuide(g => !g)}
-              className="w-full flex items-center justify-between bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-3 mb-3 text-left"
+              className="w-full flex items-center justify-between bg-orange-500/10 border border-orange-500/20 rounded-xl px-4 py-3 mb-3 text-left"
             >
-              <span className="text-sm text-blue-300 font-medium">📖 Get your free key (1 minute)</span>
-              <span className="text-blue-400 text-sm">{showGuide ? '▲' : '▼'}</span>
+              <span className="text-sm text-orange-300 font-medium">📖 Get your free Groq key (1 minute)</span>
+              <span className="text-orange-400 text-sm">{showGuide ? '▲' : '▼'}</span>
             </button>
 
             {showGuide && (
               <div className="bg-white/3 border border-white/8 rounded-xl p-4 mb-3 flex flex-col gap-3">
                 {[
-                  { n: '1', text: 'Open', link: 'aistudio.google.com', href: 'https://aistudio.google.com/app/apikey' },
-                  { n: '2', text: 'Sign in with your Google account', link: '', href: '' },
-                  { n: '3', text: 'Click the blue "Create API key" button', link: '', href: '' },
-                  { n: '4', text: 'Copy the key and paste it in the box below', link: '', href: '' },
+                  { n: '1', text: 'Open', link: 'console.groq.com/keys', href: 'https://console.groq.com/keys' },
+                  { n: '2', text: 'Sign up with your email — no credit card needed', link: '', href: '' },
+                  { n: '3', text: 'Click "Create API key", give it any name', link: '', href: '' },
+                  { n: '4', text: 'Copy the key (starts with gsk_) and paste it below', link: '', href: '' },
                 ].map(step => (
                   <div key={step.n} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-blue-500/30 text-blue-300 text-xs font-bold flex items-center justify-center flex-shrink-0">
+                    <div className="w-6 h-6 rounded-full bg-orange-500/30 text-orange-300 text-xs font-bold flex items-center justify-center flex-shrink-0">
                       {step.n}
                     </div>
                     <p className="text-xs text-white/60 leading-relaxed pt-0.5">
                       {step.text}{' '}
                       {step.href && (
-                        <a href={step.href} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline font-medium">
+                        <a href={step.href} target="_blank" rel="noopener noreferrer" className="text-orange-400 underline font-medium">
                           {step.link}
                         </a>
                       )}
@@ -98,7 +98,7 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
                 ))}
                 <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-2">
                   <p className="text-xs text-white/50">
-                    🔒 Your key is stored only on <em>your device</em>. It's never sent anywhere except directly to Google's servers when you use AI features.
+                    🔒 Your key is stored only on <em>your device</em>. It is never sent anywhere except directly to Groq's servers when you use AI features.
                   </p>
                 </div>
               </div>
@@ -108,14 +108,14 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
               type="password"
               value={key}
               onChange={e => setKey(e.target.value)}
-              placeholder="Paste your key here: AIza..."
+              placeholder="Paste your Groq key here: gsk_..."
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 font-mono mb-3"
             />
 
             <button
               onClick={handleSave}
               disabled={!key.trim()}
-              className="w-full py-3.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {saved ? '✓ Saved! AI features are now active.' : 'Save API Key'}
             </button>
