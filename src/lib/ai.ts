@@ -3,22 +3,8 @@ import Groq from 'groq-sdk'
 const VISION_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'
 const TEXT_MODEL = 'llama-3.3-70b-versatile'
 
-// Built-in key baked in at build time via GitHub Secret (VITE_GROQ_KEY).
-// User's own key (from Settings) always takes priority.
-const BUILTIN_KEY = import.meta.env.VITE_GROQ_KEY ?? ''
-
-export function hasBuiltinKey(): boolean {
-  return BUILTIN_KEY.length > 0
-}
-
-function resolveKey(userKey: string): string {
-  const key = userKey || BUILTIN_KEY
-  if (!key) throw new Error('NO_KEY')
-  return key
-}
-
-function client(userKey: string) {
-  return new Groq({ apiKey: resolveKey(userKey), dangerouslyAllowBrowser: true })
+function client(apiKey: string) {
+  return new Groq({ apiKey, dangerouslyAllowBrowser: true })
 }
 
 const SYSTEM_PROMPT = `You are Polymath's "Explain Simply" tutor — a brilliant teacher who explains ANY topic clearly, accurately, and engagingly without dumbing it down or leaving anything important out.

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import type { UserData } from '../types'
-import { hasBuiltinKey } from '../lib/ai'
 
 interface Props {
   userData: UserData
@@ -16,7 +15,6 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
   const [copyLabel, setCopyLabel] = useState('Copy link')
 
   const hasKey = !!userData.apiKey
-  const builtIn = hasBuiltinKey()
 
   function handleSave() {
     onSaveApiKey(key.trim())
@@ -71,21 +69,10 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
                 <p className="text-sm font-bold text-white">Groq API Key</p>
                 <p className="text-xs text-white/40">Powers "Explain Simply" and AI lessons</p>
               </div>
-              <div className={`text-xs font-semibold rounded-full px-2.5 py-1 ${hasKey || builtIn ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>
-                {hasKey ? '✓ Your key' : builtIn ? '✓ Built-in' : 'Not set'}
+              <div className={`text-xs font-semibold rounded-full px-2.5 py-1 ${hasKey ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                {hasKey ? '✓ Active' : 'Not set'}
               </div>
             </div>
-
-            {/* Built-in key notice */}
-            {builtIn && (
-              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2.5 mb-3">
-                <span className="text-lg">✅</span>
-                <p className="text-xs text-emerald-300 leading-relaxed">
-                  <strong>AI is built-in</strong> — all features work automatically. No key needed.
-                  {hasKey && ' Your personal key takes priority.'}
-                </p>
-              </div>
-            )}
 
             {/* Free badge */}
             <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2.5 mb-3">

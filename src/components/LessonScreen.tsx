@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { Lesson, Unit, Topic, Difficulty, UserData } from '../types'
 import { getCachedLessonContent, cacheLessonContent } from '../lib/storage'
-import { generateLessonContent, hasBuiltinKey } from '../lib/ai'
+import { generateLessonContent } from '../lib/ai'
 import { DIFFICULTIES } from '../data/topics'
 
 interface Props {
@@ -25,7 +25,7 @@ export default function LessonScreen({ lesson, unit, topic, difficulty, userData
       setAiContent(cached)
       return
     }
-    if (!userData.apiKey && !hasBuiltinKey()) return
+    if (!userData.apiKey) return
 
     setLoading(true)
     generateLessonContent(
@@ -97,7 +97,7 @@ export default function LessonScreen({ lesson, unit, topic, difficulty, userData
           )}
 
           {/* No API Key notice */}
-          {!userData.apiKey && !hasBuiltinKey() && (
+          {!userData.apiKey && (
             <div className="mt-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 text-sm text-amber-300/70">
               💡 Add your free Google Gemini API key in Settings to get personalized, expanded lessons for each topic.
             </div>
