@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react'
 import type { ExplainMessage, UserData } from '../types'
-import { explainSimply } from '../lib/ai'
+import { explainSimply, hasBuiltinKey } from '../lib/ai'
 
 interface Props {
   userData: UserData
@@ -54,7 +54,7 @@ export default function ExplainScreen({ userData, onBack, onSettings }: Props) {
 
   async function handleSend() {
     if (!input.trim() && !image) return
-    if (!userData.apiKey) {
+    if (!userData.apiKey && !hasBuiltinKey()) {
       onSettings()
       return
     }
@@ -113,7 +113,7 @@ export default function ExplainScreen({ userData, onBack, onSettings }: Props) {
               {messages.length === 0 ? "What can I explain for you simply today?" : `${messages.filter(m => m.role === 'assistant').length} explanation${messages.filter(m => m.role === 'assistant').length !== 1 ? 's' : ''}`}
             </p>
           </div>
-          {!userData.apiKey && (
+          {!userData.apiKey && !hasBuiltinKey() && (
             <button
               onClick={onSettings}
               className="text-xs bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl px-3 py-1.5 font-medium"

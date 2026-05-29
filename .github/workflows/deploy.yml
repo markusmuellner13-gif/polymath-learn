@@ -28,6 +28,7 @@ jobs:
         run: npm run build
         env:
           VITE_BASE: /polymath-learn/
+          VITE_GROQ_KEY: ${{ secrets.VITE_GROQ_KEY }}
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
