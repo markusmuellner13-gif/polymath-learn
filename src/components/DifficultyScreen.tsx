@@ -9,22 +9,25 @@ interface Props {
 
 export default function DifficultyScreen({ topic, onSelect, onBack }: Props) {
   return (
-    <div className="min-h-screen bg-[#0A0A1B] flex flex-col">
+    <div className="min-h-svh bg-[#0A0A1B] flex flex-col">
+      {/* Safe area spacer */}
+      <div className="safe-area-top" />
+
       {/* Header */}
-      <div className="px-4 pt-12 pb-6">
-        <button onClick={onBack} className="flex items-center gap-2 text-white/50 hover:text-white text-sm mb-6 transition-colors">
+      <div className="px-4 pt-4 pb-6">
+        <button onClick={onBack} className="flex items-center gap-2 text-white/50 active:text-white text-sm mb-6 transition-colors">
           <span>←</span> Back
         </button>
         <div className="flex items-center gap-4 mb-6">
           <div
-            className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold"
+            className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0"
             style={{ background: `${topic.color}25`, color: topic.color }}
           >
             {topic.icon}
           </div>
           <div>
             <h1 className="text-2xl font-black text-white">{topic.name}</h1>
-            <p className="text-sm text-white/40">{topic.description}</p>
+            <p className="text-sm text-white/40 leading-snug mt-0.5">{topic.description}</p>
           </div>
         </div>
         <h2 className="text-lg font-bold text-white">Pick your level</h2>
@@ -32,16 +35,16 @@ export default function DifficultyScreen({ topic, onSelect, onBack }: Props) {
       </div>
 
       {/* Difficulty options */}
-      <div className="flex-1 overflow-y-auto px-4 pb-8">
-        <div className="flex flex-col gap-3">
+      <div className="flex-1 overflow-y-auto px-4 safe-area-bottom">
+        <div className="flex flex-col gap-3 pb-6">
           {DIFFICULTIES.map((diff, i) => (
             <button
               key={diff.id}
               onClick={() => onSelect(diff.id)}
-              className="group relative bg-white/5 border border-white/10 rounded-2xl p-5 text-left hover:border-white/25 hover:bg-white/8 transition-all active:scale-[0.98] overflow-hidden"
+              className="group relative bg-white/5 border border-white/10 rounded-2xl p-5 text-left active:scale-[0.98] transition-all overflow-hidden"
             >
               <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity rounded-2xl"
+                className="absolute inset-0 opacity-0 group-active:opacity-5 transition-opacity rounded-2xl"
                 style={{ backgroundColor: diff.color }}
               />
               <div className="flex items-center gap-4">
@@ -51,8 +54,8 @@ export default function DifficultyScreen({ topic, onSelect, onBack }: Props) {
                 >
                   {diff.icon}
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-0.5">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                     <span className="font-bold text-white text-base">{diff.label}</span>
                     <span className="text-xs rounded-full px-2 py-0.5 font-medium" style={{ background: `${diff.color}20`, color: diff.color }}>
                       {diff.tagline}
@@ -60,10 +63,10 @@ export default function DifficultyScreen({ topic, onSelect, onBack }: Props) {
                   </div>
                   <p className="text-xs text-white/45 leading-relaxed">{diff.description}</p>
                 </div>
-                <span className="text-white/20 group-hover:text-white/50 text-lg transition-colors">→</span>
+                <span className="text-white/20 text-lg flex-shrink-0">→</span>
               </div>
 
-              {/* Progress indicator dots */}
+              {/* Level dots */}
               <div className="flex gap-1 mt-3 ml-16">
                 {DIFFICULTIES.map((_, j) => (
                   <div

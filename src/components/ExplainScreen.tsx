@@ -97,9 +97,10 @@ export default function ExplainScreen({ userData, onBack, onSettings }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A1B] flex flex-col" onDrop={handleDrop} onDragOver={e => e.preventDefault()}>
+    <div className="min-h-svh bg-[#0A0A1B] flex flex-col" onDrop={handleDrop} onDragOver={e => e.preventDefault()}>
+      <div className="safe-area-top" />
       {/* Header */}
-      <div className="px-4 pt-12 pb-4 border-b border-white/5">
+      <div className="px-4 pt-4 pb-4 border-b border-white/5">
         <button onClick={onBack} className="flex items-center gap-2 text-white/50 hover:text-white text-sm mb-4 transition-colors">
           <span>←</span> Back
         </button>
@@ -207,7 +208,7 @@ export default function ExplainScreen({ userData, onBack, onSettings }: Props) {
       </div>
 
       {/* Input area */}
-      <div className="border-t border-white/5 p-4 flex flex-col gap-3">
+      <div className="border-t border-white/5 px-4 pt-4 safe-area-bottom flex flex-col gap-3">
         {image && (
           <div className="flex items-center gap-2 bg-violet-500/10 border border-violet-500/20 rounded-xl px-3 py-2">
             <span className="text-sm">🖼</span>

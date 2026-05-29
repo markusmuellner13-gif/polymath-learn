@@ -22,15 +22,18 @@ export default function CourseScreen({ topic, difficulty, units, userData, onSel
   const progress = totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0
 
   return (
-    <div className="min-h-screen bg-[#0A0A1B] flex flex-col">
+    <div className="min-h-svh bg-[#0A0A1B] flex flex-col">
+      {/* Safe area spacer */}
+      <div className="safe-area-top" />
+
       {/* Hero header */}
       <div className="relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-20"
           style={{ background: `radial-gradient(ellipse at top, ${topic.color}, transparent 70%)` }}
         />
-        <div className="relative px-4 pt-12 pb-6">
-          <button onClick={onBack} className="flex items-center gap-2 text-white/50 hover:text-white text-sm mb-4 transition-colors">
+        <div className="relative px-4 pt-4 pb-6">
+          <button onClick={onBack} className="flex items-center gap-2 text-white/50 active:text-white text-sm mb-4 transition-colors">
             <span>←</span> Back
           </button>
 
@@ -68,7 +71,7 @@ export default function CourseScreen({ topic, difficulty, units, userData, onSel
       </div>
 
       {/* Units */}
-      <div className="flex-1 overflow-y-auto px-4 pb-8 pt-2">
+      <div className="flex-1 overflow-y-auto px-4 pt-2 safe-area-bottom" style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 32px)' }}>
         {units.length === 0 ? (
           <NoContentCard topic={topic} difficulty={diffInfo.label} />
         ) : (

@@ -41,9 +41,11 @@ export default function QuizScreen({ lesson, topic, onComplete, onBack }: Props)
   const progress = ((currentQ + (revealed ? 1 : 0)) / lesson.quiz.length) * 100
 
   return (
-    <div className="min-h-screen bg-[#0A0A1B] flex flex-col">
+    <div className="min-h-svh bg-[#0A0A1B] flex flex-col">
+      {/* Safe area */}
+      <div className="safe-area-top" />
       {/* Header */}
-      <div className="px-4 pt-12 pb-4">
+      <div className="px-4 pt-4 pb-4">
         <button onClick={onBack} className="flex items-center gap-2 text-white/50 hover:text-white text-sm mb-6 transition-colors">
           <span>←</span> Exit Quiz
         </button>
@@ -117,7 +119,7 @@ export default function QuizScreen({ lesson, topic, onComplete, onBack }: Props)
 
       {/* Next button */}
       {revealed && (
-        <div className="p-4 border-t border-white/5">
+        <div className="px-4 pt-4 border-t border-white/5 safe-area-bottom">
           <button
             onClick={handleNext}
             className="w-full py-4 rounded-2xl font-bold text-white text-base transition-all active:scale-[0.98]"

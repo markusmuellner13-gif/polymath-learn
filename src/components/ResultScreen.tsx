@@ -22,7 +22,7 @@ export default function ResultScreen({ lesson, topic, score, xpEarned, userData,
     : "Don't worry — review and try again!"
 
   return (
-    <div className="min-h-screen bg-[#0A0A1B] flex flex-col items-center justify-center px-6">
+    <div className="min-h-svh bg-[#0A0A1B] flex flex-col items-center justify-center px-6 safe-area-top-pad safe-area-bottom">
       {/* Fireworks background glow */}
       {passed && (
         <div

@@ -24,14 +24,26 @@ html, body, #root {
   position: relative;
 }
 
+/* Safe-area spacer — place at the very top of each screen */
+.safe-area-top {
+  height: env(safe-area-inset-top, 0px);
+  flex-shrink: 0;
+}
+
+/* Use on any bottom fixed/sticky bar */
+.safe-area-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+}
+
+/* Use on the StatsBar wrapper so content clears the status-bar/notch */
+.safe-area-top-pad {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
 textarea {
   field-sizing: content;
 }
 
 ::-webkit-scrollbar {
   width: 0;
-}
-
-.safe-area-bottom {
-  padding-bottom: max(16px, env(safe-area-inset-bottom));
 }

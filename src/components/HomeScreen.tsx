@@ -27,7 +27,7 @@ export default function HomeScreen({ userData, onSelectTopic, onSettings }: Prop
     <div className="min-h-screen bg-[#0A0A1B] flex flex-col">
       <StatsBar userData={userData} onSettings={onSettings} />
 
-      <div className="flex-1 overflow-y-auto px-4 pb-8">
+      <div className="flex-1 overflow-y-auto px-4 safe-area-bottom">
         {/* Hero */}
         <div className="pt-8 pb-6 text-center">
           <div className="inline-flex items-center gap-2 bg-violet-500/20 border border-violet-500/30 rounded-full px-4 py-1.5 mb-4">

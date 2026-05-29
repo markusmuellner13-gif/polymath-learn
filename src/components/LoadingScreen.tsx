@@ -23,12 +23,22 @@ export default function LoadingScreen({ onDone }: { onDone: () => void }) {
   }, [onDone])
 
   return (
-    <div className="min-h-screen bg-[#0A0A1B] flex flex-col items-center justify-center px-8">
+    <div className="min-h-svh bg-[#0A0A1B] flex flex-col items-center justify-center safe-area-top-pad safe-area-bottom px-8">
       <div className="flex flex-col items-center gap-8 w-full max-w-sm">
         {/* Logo */}
         <div className="relative">
-          <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-2xl shadow-violet-500/30 animate-pulse">
-            <span className="text-4xl font-black text-white">P</span>
+          <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-2xl shadow-violet-500/30">
+            <svg viewBox="0 0 100 100" className="w-12 h-12" fill="none">
+              {/* Letter P as path */}
+              <path
+                d="M 18 14 L 18 86 L 30 86 L 30 58 L 56 58 Q 82 58 82 36 Q 82 14 56 14 Z"
+                fill="white"
+              />
+              <path
+                d="M 30 26 L 54 26 Q 70 26 70 36 Q 70 46 54 46 L 30 46 Z"
+                fill="#6D28D9"
+              />
+            </svg>
           </div>
           <div className="absolute -inset-2 rounded-3xl bg-violet-500/20 blur-xl animate-ping" style={{ animationDuration: '2s' }} />
         </div>
