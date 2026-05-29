@@ -11,14 +11,31 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
   const [key, setKey] = useState(userData.apiKey)
   const [saved, setSaved] = useState(false)
   const [showGuide, setShowGuide] = useState(!userData.apiKey)
+  const [showKey, setShowKey] = useState(false)
+  const [copyLabel, setCopyLabel] = useState('Copy link')
 
-  const handleSave = () => {
+  const hasKey = !!userData.apiKey
+
+  function handleSave() {
     onSaveApiKey(key.trim())
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
 
-  const hasKey = !!userData.apiKey
+  async function handleShare() {
+    const shareUrl = `${window.location.origin}${window.location.pathname}#k=${userData.apiKey}`
+    if (navigator.share) {
+      await navigator.share({
+        title: 'Polymath – my API key',
+        text: 'Open this on your other device to import my Polymath API key automatically.',
+        url: shareUrl,
+      }).catch(() => {})
+    } else {
+      await navigator.clipboard.writeText(shareUrl)
+      setCopyLabel('Copied!')
+      setTimeout(() => setCopyLabel('Copy link'), 2500)
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
@@ -27,7 +44,7 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-white">Settings</h2>
-            <button onClick={onClose} className="text-white/50 hover:text-white text-xl w-8 h-8 flex items-center justify-center">✕</button>
+            <button onClick={onClose} className="text-white/50 active:text-white text-xl w-8 h-8 flex items-center justify-center">✕</button>
           </div>
 
           {/* Stats */}
@@ -61,9 +78,26 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
             <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2.5 mb-3">
               <span className="text-lg">🎉</span>
               <p className="text-xs text-emerald-300 leading-relaxed">
-                <strong>100% Free, no credit card ever</strong> — Groq runs Llama 4 at lightning speed on a generous free tier.
+                <strong>100% Free, no credit card ever</strong> — Groq runs Llama 4 at lightning speed.
               </p>
             </div>
+
+            {/* Transfer to other device — shown only when key is set */}
+            {hasKey && (
+              <div className="bg-violet-500/10 border border-violet-500/20 rounded-xl p-4 mb-3">
+                <p className="text-sm font-semibold text-violet-300 mb-1">📲 Use on another device</p>
+                <p className="text-xs text-white/50 leading-relaxed mb-3">
+                  Tap below to share a link. Open it on your other phone and your API key is imported automatically.
+                </p>
+                <button
+                  onClick={handleShare}
+                  className="w-full py-2.5 bg-violet-500/30 border border-violet-500/40 rounded-xl text-violet-200 text-sm font-semibold active:opacity-70 transition-opacity"
+                >
+                  {copyLabel === 'Copied!' ? '✓ Link copied!' : '🔗 Share key to another device'}
+                </button>
+                <p className="text-xs text-white/25 mt-2 text-center">Only send this link to yourself</p>
+              </div>
+            )}
 
             {/* How to get key guide */}
             <button
@@ -98,26 +132,38 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
                 ))}
                 <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-2">
                   <p className="text-xs text-white/50">
-                    🔒 Your key is stored only on <em>your device</em>. It is never sent anywhere except directly to Groq's servers when you use AI features.
+                    🔒 Your key is stored only on this device. Use the "Share key" button above to transfer it.
                   </p>
                 </div>
               </div>
             )}
 
-            <input
-              type="password"
-              value={key}
-              onChange={e => setKey(e.target.value)}
-              placeholder="Paste your Groq key here: gsk_..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-orange-400 font-mono mb-3"
-            />
+            {/* Key input with show/hide */}
+            <div className="relative mb-3">
+              <input
+                type={showKey ? 'text' : 'password'}
+                value={key}
+                onChange={e => setKey(e.target.value)}
+                placeholder="Paste your Groq key here: gsk_..."
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder-white/20 focus:outline-none focus:border-orange-400 font-mono"
+              />
+              {key && (
+                <button
+                  type="button"
+                  onClick={() => setShowKey(v => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 active:text-white/70 text-lg"
+                >
+                  {showKey ? '🙈' : '👁'}
+                </button>
+              )}
+            </div>
 
             <button
               onClick={handleSave}
               disabled={!key.trim()}
-              className="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl text-white font-bold text-sm transition-all hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl text-white font-bold text-sm transition-all active:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {saved ? '✓ Saved! AI features are now active.' : 'Save API Key'}
+              {saved ? '✓ Saved!' : 'Save API Key'}
             </button>
           </div>
 

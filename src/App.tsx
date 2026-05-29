@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import type { AppScreen, Topic, Difficulty, Unit, Lesson } from './types'
 import { useUserData } from './hooks/useUserData'
 import { getAllUnitsForTopic } from './data/curriculum'
@@ -23,6 +23,18 @@ export default function App() {
   const [quizXP, setQuizXP] = useState(0)
 
   const { userData, completeLesson, setApiKey } = useUserData()
+
+  // Auto-import API key from a shared link (e.g. polymath-learn/#k=gsk_xxx)
+  useEffect(() => {
+    const hash = window.location.hash.slice(1)
+    if (!hash) return
+    const params = new URLSearchParams(hash)
+    const keyFromUrl = params.get('k')
+    if (keyFromUrl && keyFromUrl.length > 10) {
+      setApiKey(keyFromUrl)
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  }, [setApiKey])
 
   const handleTopicSelect = useCallback((topic: Topic) => {
     setSelectedTopic(topic)
