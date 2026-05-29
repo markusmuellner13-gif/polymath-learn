@@ -40,9 +40,6 @@ html, body, #root {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
-textarea {
-  field-sizing: content;
-}
 
 ::-webkit-scrollbar {
   width: 0;

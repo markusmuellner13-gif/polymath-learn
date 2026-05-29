@@ -21,8 +21,8 @@ export default function ExplainScreen({ userData, onBack, onSettings }: Props) {
   const handleFile = useCallback(async (file: File) => {
     if (file.type === 'application/pdf') {
       const arrayBuffer = await file.arrayBuffer()
-      const { getDocument, GlobalWorkerOptions } = await import('pdfjs-dist')
-      GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs`
+      const { getDocument, GlobalWorkerOptions, version } = await import('pdfjs-dist')
+      GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.mjs`
       const pdf = await getDocument({ data: arrayBuffer }).promise
       let text = ''
       for (let i = 1; i <= pdf.numPages; i++) {
@@ -234,7 +234,12 @@ export default function ExplainScreen({ userData, onBack, onSettings }: Props) {
           <div className="flex-1 relative">
             <textarea
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={e => {
+                setInput(e.target.value)
+                const el = e.target
+                el.style.height = 'auto'
+                el.style.height = `${Math.min(el.scrollHeight, 120)}px`
+              }}
               onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() } }}
               placeholder={image ? 'Add a question about the image…' : 'Ask anything… (or drop a file here)'}
               rows={1}

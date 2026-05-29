@@ -109,7 +109,7 @@ export default function SettingsModal({ userData, onSaveApiKey, onClose }: Props
               value={key}
               onChange={e => setKey(e.target.value)}
               placeholder="Paste your Groq key here: gsk_..."
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500 font-mono mb-3"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-orange-400 font-mono mb-3"
             />
 
             <button
