@@ -1,8 +1,23 @@
 import { GoogleGenerativeAI, type Part } from '@google/generative-ai'
 
-function getModel(apiKey: string) {
-  const genAI = new GoogleGenerativeAI(apiKey)
-  return genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
+const MODELS = ['gemini-2.0-flash-lite', 'gemini-1.5-flash-8b', 'gemini-2.0-flash', 'gemini-1.5-flash']
+
+function getClient(apiKey: string) {
+  return new GoogleGenerativeAI(apiKey)
+}
+
+async function callWithFallback(_apiKey: string, fn: (modelName: string) => Promise<string>): Promise<string> {
+  let lastError: unknown
+  for (const model of MODELS) {
+    try {
+      return await fn(model)
+    } catch (err: any) {
+      // Only fall through on quota / not-found errors, not on auth errors
+      if (err?.message?.includes('401') || err?.message?.includes('403') || err?.message?.includes('API_KEY')) throw err
+      lastError = err
+    }
+  }
+  throw lastError
 }
 
 export async function explainSimply(
@@ -11,8 +26,6 @@ export async function explainSimply(
   imageBase64?: string,
   imageMime?: string,
 ): Promise<string> {
-  const model = getModel(apiKey)
-
   const systemPrompt = `You are Polymath's "Explain Simply" tutor — a brilliant teacher who explains ANY topic clearly, accurately, and engagingly without dumbing it down or leaving anything important out.
 
 Your explanations must:
@@ -36,8 +49,11 @@ If the user provides an image, diagram, drawing, equation, or screenshot — ana
     })
   }
 
-  const result = await model.generateContent(parts)
-  return result.response.text()
+  return callWithFallback(apiKey, async (modelName) => {
+    const model = getClient(apiKey).getGenerativeModel({ model: modelName })
+    const result = await model.generateContent(parts)
+    return result.response.text()
+  })
 }
 
 export async function generateLessonContent(
@@ -48,8 +64,6 @@ export async function generateLessonContent(
   difficulty: string,
   keyPoints: string[],
 ): Promise<string> {
-  const model = getModel(apiKey)
-
   const prompt = `Generate a detailed, engaging lesson for a student learning "${topicName}" at the "${difficulty}" level.
 
 Topic: ${topicName}
@@ -67,6 +81,9 @@ Write a comprehensive lesson (500-800 words) that:
 
 Write for a ${difficulty === 'Spark' ? 'complete beginner' : difficulty === 'Builder' ? 'beginner with some basics' : difficulty === 'Explorer' ? 'intermediate learner' : difficulty === 'Scholar' ? 'advanced student' : 'near-expert'}.`
 
-  const result = await model.generateContent(prompt)
-  return result.response.text()
+  return callWithFallback(apiKey, async (modelName) => {
+    const model = getClient(apiKey).getGenerativeModel({ model: modelName })
+    const result = await model.generateContent(prompt)
+    return result.response.text()
+  })
 }
