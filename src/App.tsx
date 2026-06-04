@@ -56,7 +56,7 @@ export default function App() {
     setScreen('lesson')
   }, [])
 
-  const handleQuizComplete = useCallback(
+  const handleLessonComplete = useCallback(
     (score: number, xpEarned: number) => {
       if (selectedTopic && selectedDifficulty && selectedLesson) {
         completeLesson(selectedTopic.id, selectedDifficulty, selectedLesson.id, score, xpEarned)
@@ -67,6 +67,8 @@ export default function App() {
     },
     [selectedTopic, selectedDifficulty, selectedLesson, completeLesson],
   )
+
+  const handleQuizComplete = handleLessonComplete
 
   const currentUnits =
     selectedTopic && selectedDifficulty ? getAllUnitsForTopic(selectedTopic.id, selectedDifficulty) : []
@@ -108,8 +110,7 @@ export default function App() {
           unit={selectedUnit}
           topic={selectedTopic}
           difficulty={selectedDifficulty}
-          userData={userData}
-          onStartQuiz={() => setScreen('quiz')}
+          onComplete={handleLessonComplete}
           onBack={() => setScreen('course')}
         />
       )}

@@ -1,4 +1,25 @@
 import type { Curriculum, Difficulty } from '../types'
+import {
+  mathBuilder, mathExplorer, mathScholar, mathMaster,
+  physicsBuilder, physicsExplorer, physicsScholar, physicsMaster,
+} from './curriculum-advanced'
+import {
+  chemBuilder, chemExplorer, chemScholar, chemMaster,
+  bioBuilder, bioExplorer, bioScholar, bioMaster,
+  historyBuilder, historyExplorer, historyScholar, historyMaster,
+} from './curriculum-advanced2'
+import {
+  csBuilder, csExplorer, csScholar, csMaster,
+  economicsBuilder, economicsExplorer, economicsScholar, economicsMaster,
+  psychologyBuilder, psychologyExplorer, psychologyScholar, psychologyMaster,
+  quantumBuilder, quantumExplorer, quantumScholar, quantumMaster,
+} from './curriculum-advanced3'
+import {
+  astronomyBuilder, astronomyExplorer, astronomyScholar, astronomyMaster,
+  philosophyBuilder, philosophyExplorer, philosophyScholar, philosophyMaster,
+  geographyBuilder, geographyExplorer, geographyScholar, geographyMaster,
+  literatureBuilder, literatureExplorer, literatureScholar, literatureMaster,
+} from './curriculum-advanced4'
 
 const make = (topicId: string, difficulty: Difficulty, units: Curriculum['units']): Curriculum => ({
   topicId,
@@ -1227,19 +1248,19 @@ const literatureSpark: Curriculum = make('literature', 'spark', [
 // ─── CURRICULUM MAP ───────────────────────────────────────────────────────────
 
 export const CURRICULA: Curriculum[] = [
-  mathSpark,
-  physicsSpark,
-  chemistrySpark,
-  biologySpark,
-  historySpark,
-  csSpark,
-  economicsSpark,
-  psychologySpark,
-  quantumSpark,
-  astronomySpark,
-  philosophySpark,
-  geographySpark,
-  literatureSpark,
+  mathSpark, mathBuilder, mathExplorer, mathScholar, mathMaster,
+  physicsSpark, physicsBuilder, physicsExplorer, physicsScholar, physicsMaster,
+  chemistrySpark, chemBuilder, chemExplorer, chemScholar, chemMaster,
+  biologySpark, bioBuilder, bioExplorer, bioScholar, bioMaster,
+  historySpark, historyBuilder, historyExplorer, historyScholar, historyMaster,
+  csSpark, csBuilder, csExplorer, csScholar, csMaster,
+  economicsSpark, economicsBuilder, economicsExplorer, economicsScholar, economicsMaster,
+  psychologySpark, psychologyBuilder, psychologyExplorer, psychologyScholar, psychologyMaster,
+  quantumSpark, quantumBuilder, quantumExplorer, quantumScholar, quantumMaster,
+  astronomySpark, astronomyBuilder, astronomyExplorer, astronomyScholar, astronomyMaster,
+  philosophySpark, philosophyBuilder, philosophyExplorer, philosophyScholar, philosophyMaster,
+  geographySpark, geographyBuilder, geographyExplorer, geographyScholar, geographyMaster,
+  literatureSpark, literatureBuilder, literatureExplorer, literatureScholar, literatureMaster,
 ]
 
 export function getCurriculum(topicId: string, difficulty: Difficulty): Curriculum | null {
